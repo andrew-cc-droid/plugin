@@ -63,15 +63,20 @@ class WOPEN_OS_Presale {
      * Load plugin dependencies
      */
     private function load_dependencies() {
-        // Admin functions
-        require_once WOPEN_OS_PRESALE_PATH . 'admin/class-wopen-os-presale-admin.php';
+        // Load the admin class
+        require_once plugin_dir_path(__FILE__) . 'admin/class-wopen-os-presale-admin.php';
         
-        // Public functions
-        require_once WOPEN_OS_PRESALE_PATH . 'public/class-wopen-os-presale-public.php';
+        // Load the public class
+        require_once plugin_dir_path(__FILE__) . 'public/class-wopen-os-presale-public.php';
         
-        // Core plugin functionality
-        require_once WOPEN_OS_PRESALE_PATH . 'includes/class-wopen-os-presale-solana.php';
-        require_once WOPEN_OS_PRESALE_PATH . 'includes/class-wopen-os-presale-api.php';
+        // Load API handler
+        require_once plugin_dir_path(__FILE__) . 'includes/class-wopen-os-presale-api.php';
+        
+        // Load Solana utilities
+        require_once plugin_dir_path(__FILE__) . 'includes/class-wopen-os-presale-solana.php';
+        
+        // Load activator class (handles redirects)
+        require_once plugin_dir_path(__FILE__) . 'includes/class-wopen-os-presale-activator.php';
     }
 
     /**
@@ -163,6 +168,43 @@ class WOPEN_OS_Presale {
         foreach ($options as $key => $value) {
             if (!get_option($key)) {
                 add_option($key, $value);
+            }
+        }
+        
+        // Automatically create a page with the presale shortcode
+        self::create_presale_page();
+    }
+    
+    /**
+     * Create a dedicated page for the presale
+     */
+    private static function create_presale_page() {
+        // Check if our page exists already
+        $existing_page = get_page_by_path('wopen-os-presale');
+        
+        // If the page doesn't exist, create it
+        if (!$existing_page) {
+            // Create post object
+            $page = array(
+                'post_title'    => 'WOPEN-OS Presale',
+                'post_content'  => '[wopen_os_presale]',
+                'post_status'   => 'publish',
+                'post_author'   => 1,
+                'post_type'     => 'page',
+                'post_name'     => 'wopen-os-presale'
+            );
+            
+            // Insert the post into the database
+            $page_id = wp_insert_post($page);
+            
+            if ($page_id) {
+                // Save the page ID in options for future reference
+                update_option('wopen_os_presale_page_id', $page_id);
+                
+                // Redirect the user to this page after activation
+                if (!get_option('wopen_os_presale_activation_redirect')) {
+                    add_option('wopen_os_presale_activation_redirect', true);
+                }
             }
         }
     }
