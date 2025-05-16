@@ -40,7 +40,7 @@ class WOPEN_OS_Presale_Admin {
     /**
      * Register admin menu items
      */
-    public function add_admin_menu() {
+    public function add_menu_pages() {
         // Main menu
         add_menu_page(
             'WOPEN-OS Presale',
