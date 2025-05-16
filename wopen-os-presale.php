@@ -207,7 +207,19 @@ class WOPEN_OS_Presale {
                     add_option('wopen_os_presale_activation_redirect', true);
                 }
             }
+        } else {
+            // Update the existing page to ensure it has the shortcode
+            wp_update_post(array(
+                'ID' => $existing_page->ID,
+                'post_content' => '[wopen_os_presale]'
+            ));
+            
+            // Save the page ID in options for future reference
+            update_option('wopen_os_presale_page_id', $existing_page->ID);
         }
+        
+        // Flush rewrite rules to ensure the page is visible
+        flush_rewrite_rules();
     }
     
     /**
