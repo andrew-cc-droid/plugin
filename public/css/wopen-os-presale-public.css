@@ -1,0 +1,293 @@
+/**
+ * WOPEN-OS Presale Public CSS
+ */
+
+.wopen-os-presale-container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    background: rgba(21, 28, 41, 0.9);
+    border-radius: 10px;
+    padding: 2rem;
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wopen-os-presale-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.wopen-os-token-logo {
+    background: linear-gradient(135deg, #ff6b00, #ee0979);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    margin-right: 1.5rem;
+}
+
+.wopen-os-token-details h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+}
+
+.wopen-os-token-details p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Rate change alert */
+.wopen-os-rate-change-alert {
+    background: rgba(255, 193, 7, 0.2);
+    border: 1px solid #ffc107;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.wopen-os-rate-change-alert h4 {
+    color: #ffc107;
+    margin-bottom: 0.5rem;
+}
+
+.wopen-os-countdown {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.wopen-os-countdown-item {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    margin: 0 0.5rem;
+    border-radius: 5px;
+    min-width: 70px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wopen-os-countdown-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff6b00;
+}
+
+.wopen-os-countdown-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.25rem;
+}
+
+.wopen-os-rate-comparison {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.wopen-os-rate-item {
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.wopen-os-rate-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.wopen-os-rate-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+/* Contract info */
+.wopen-os-contract-info {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.wopen-os-contract-info p {
+    margin: 0.5rem 0;
+}
+
+.wopen-os-contract-info code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: monospace;
+    word-break: break-all;
+}
+
+/* Swap form */
+.wopen-os-swap-form {
+    background: rgba(10, 14, 23, 0.5);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.wopen-os-swap-form-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.wopen-os-input-group {
+    margin-bottom: 1rem;
+}
+
+.wopen-os-input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.wopen-os-input-container {
+    display: flex;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.wopen-os-input-container input {
+    flex: 1;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1rem;
+}
+
+.wopen-os-input-container input:focus {
+    outline: none;
+}
+
+.wopen-os-token-select {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+}
+
+.wopen-os-exchange-rate {
+    text-align: center;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.wopen-os-you-receive {
+    background: rgba(40, 167, 69, 0.1);
+    border: 1px solid rgba(40, 167, 69, 0.2);
+    border-radius: 5px;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.wopen-os-you-receive-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+}
+
+.wopen-os-you-receive-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #28a745;
+}
+
+.wopen-os-button {
+    display: inline-block;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #ff6b00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.wopen-os-button:hover {
+    background-color: #e05e00;
+}
+
+.wopen-os-button:disabled {
+    background-color: #767676;
+    cursor: not-allowed;
+}
+
+/* Result info */
+.wopen-os-deposit-info {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.wopen-os-deposit-info h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #ff6b00;
+}
+
+.wopen-os-deposit-address {
+    margin-bottom: 1.5rem;
+}
+
+.wopen-os-deposit-address .address {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-family: monospace;
+    word-break: break-all;
+}
+
+.wopen-os-access-token .token {
+    background: #ffc107;
+    color: #000;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.wopen-os-access-token .warning {
+    color: #ffc107;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.wopen-os-error-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+    color: #dc3545;
+    border-radius: 4px;
+    text-align: center;
+}

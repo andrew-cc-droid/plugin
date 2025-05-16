@@ -1,0 +1,41 @@
+/**
+ * WOPEN-OS Presale Admin CSS
+ */
+
+.status-pending {
+    color: #f0ad4e;
+}
+
+.status-processing {
+    color: #5bc0de;
+}
+
+.status-completed {
+    color: #5cb85c;
+}
+
+.status-failed {
+    color: #d9534f;
+}
+
+/* Orders table */
+.wp-list-table .column-id {
+    width: 5%;
+}
+
+.wp-list-table .column-user {
+    width: 10%;
+}
+
+.wp-list-table .column-amount,
+.wp-list-table .column-token_amount {
+    width: 10%;
+}
+
+.wp-list-table .column-status {
+    width: 10%;
+}
+
+.wp-list-table .column-created {
+    width: 15%;
+}
