@@ -90,9 +90,10 @@ class WOPEN_OS_Presale {
         add_action('admin_enqueue_scripts', array($plugin_admin, 'enqueue_scripts'));
         
         // Admin menu
-        add_action('admin_menu', array($plugin_admin, 'add_menu_pages'));
+        add_action('admin_menu', array($plugin_admin, 'add_admin_menu'));
         
-        // Settings
+        // Settings and initialization
+        add_action('admin_init', array($plugin_admin, 'admin_init'));
         add_action('admin_init', array($plugin_admin, 'register_settings'));
     }
 

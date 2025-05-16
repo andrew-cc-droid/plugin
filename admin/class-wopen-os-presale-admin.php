@@ -38,51 +38,71 @@ class WOPEN_OS_Presale_Admin {
     }
     
     /**
-     * Add menu pages
+     * Register admin menu items
      */
-    public function add_menu_pages() {
-        // Add top level menu page
+    public function add_admin_menu() {
+        // Main menu
         add_menu_page(
-            __('WOPEN-OS Presale', 'wopen-os-presale'),
-            __('WOPEN-OS Presale', 'wopen-os-presale'),
+            'WOPEN-OS Presale',
+            'WOPEN-OS Presale',
             'manage_options',
             'wopen-os-presale',
-            array($this, 'display_settings_page'),
-            'dashicons-money-alt',
-            55
+            array($this, 'display_dashboard'),
+            'dashicons-chart-area',
+            25
         );
         
-        // Add settings subpage
+        // Dashboard submenu
         add_submenu_page(
             'wopen-os-presale',
-            __('Settings', 'wopen-os-presale'),
-            __('Settings', 'wopen-os-presale'),
+            'Dashboard',
+            'Dashboard',
             'manage_options',
             'wopen-os-presale',
-            array($this, 'display_settings_page')
+            array($this, 'display_dashboard')
         );
         
-        // Add orders subpage
+        // Orders submenu
         add_submenu_page(
             'wopen-os-presale',
-            __('Orders', 'wopen-os-presale'),
-            __('Orders', 'wopen-os-presale'),
+            'Orders',
+            'Orders',
             'manage_options',
             'wopen-os-presale-orders',
-            array($this, 'display_orders_page')
+            array($this, 'display_orders')
         );
+        
+        // Settings submenu
+        add_submenu_page(
+            'wopen-os-presale',
+            'Settings',
+            'Settings',
+            'manage_options',
+            'wopen-os-presale-settings',
+            array($this, 'display_settings')
+        );
+    }
+    
+    /**
+     * Register admin initialization hooks
+     * This ensures menu and settings are registered properly
+     */
+    public function admin_init() {
+        // Force refresh of menu cache
+        delete_transient('menu');
+        
+        // Register settings
+        register_setting('wopen_os_presale_settings', 'wopen_os_presale_rate');
+        register_setting('wopen_os_presale_settings', 'wopen_os_next_rate');
+        register_setting('wopen_os_presale_settings', 'wopen_os_rate_increase_time');
+        register_setting('wopen_os_presale_settings', 'wopen_os_wopen_contract');
+        register_setting('wopen_os_presale_settings', 'wopen_os_os_contract');
     }
     
     /**
      * Register settings
      */
     public function register_settings() {
-        register_setting('wopen_os_presale_general', 'wopen_os_presale_rate');
-        register_setting('wopen_os_presale_general', 'wopen_os_next_rate');
-        register_setting('wopen_os_presale_general', 'wopen_os_rate_increase_time');
-        register_setting('wopen_os_presale_general', 'wopen_os_wopen_contract');
-        register_setting('wopen_os_presale_general', 'wopen_os_os_contract');
-        
         // General settings section
         add_settings_section(
             'wopen_os_presale_general_section',
@@ -191,9 +211,77 @@ class WOPEN_OS_Presale_Admin {
     }
     
     /**
+     * Display dashboard page
+     */
+    public function display_dashboard() {
+        // Check user capabilities
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+        
+        // Get presale statistics
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'wopen_os_orders';
+        
+        // Get total orders
+        $total_orders = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
+        
+        // Get total amount deposited
+        $total_wopen = $wpdb->get_var("SELECT SUM(amount) FROM $table_name");
+        
+        // Get total OS tokens to be distributed
+        $total_os = $wpdb->get_var("SELECT SUM(token_amount) FROM $table_name");
+        
+        // Show dashboard
+        ?>
+        <div class="wrap">
+            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            
+            <div class="wopen-os-dashboard-cards">
+                <div class="wopen-os-card">
+                    <h2><?php _e('Total Orders', 'wopen-os-presale'); ?></h2>
+                    <p class="wopen-os-big-number"><?php echo esc_html($total_orders ? $total_orders : '0'); ?></p>
+                </div>
+                
+                <div class="wopen-os-card">
+                    <h2><?php _e('Total WOPEN Deposited', 'wopen-os-presale'); ?></h2>
+                    <p class="wopen-os-big-number"><?php echo esc_html($total_wopen ? number_format($total_wopen, 2) : '0'); ?></p>
+                </div>
+                
+                <div class="wopen-os-card">
+                    <h2><?php _e('Total OS Tokens', 'wopen-os-presale'); ?></h2>
+                    <p class="wopen-os-big-number"><?php echo esc_html($total_os ? number_format($total_os, 2) : '0'); ?></p>
+                </div>
+            </div>
+            
+            <div class="wopen-os-dashboard-info">
+                <h2><?php _e('Presale Information', 'wopen-os-presale'); ?></h2>
+                <p>
+                    <strong><?php _e('Current Rate:', 'wopen-os-presale'); ?></strong>
+                    1 WOPEN = <?php echo esc_html(get_option('wopen_os_presale_rate', 0.1)); ?> OS
+                </p>
+                <p>
+                    <strong><?php _e('Rate After Countdown:', 'wopen-os-presale'); ?></strong>
+                    1 WOPEN = <?php echo esc_html(get_option('wopen_os_next_rate', 0.02)); ?> OS
+                </p>
+                <p>
+                    <strong><?php _e('Countdown End Time:', 'wopen-os-presale'); ?></strong>
+                    <?php echo esc_html(date('Y-m-d H:i:s', get_option('wopen_os_rate_increase_time', time() + 12 * 3600))); ?>
+                </p>
+            </div>
+            
+            <div class="wopen-os-dashboard-links">
+                <a href="<?php echo admin_url('admin.php?page=wopen-os-presale-orders'); ?>" class="button button-primary"><?php _e('View Orders', 'wopen-os-presale'); ?></a>
+                <a href="<?php echo admin_url('admin.php?page=wopen-os-presale-settings'); ?>" class="button button-secondary"><?php _e('Presale Settings', 'wopen-os-presale'); ?></a>
+            </div>
+        </div>
+        <?php
+    }
+    
+    /**
      * Display settings page
      */
-    public function display_settings_page() {
+    public function display_settings() {
         // Check user capabilities
         if (!current_user_can('manage_options')) {
             return;
@@ -205,7 +293,7 @@ class WOPEN_OS_Presale_Admin {
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             <form method="post" action="options.php">
                 <?php
-                settings_fields('wopen_os_presale_general');
+                settings_fields('wopen_os_presale_settings');
                 do_settings_sections('wopen_os_presale_general');
                 submit_button();
                 ?>
@@ -216,6 +304,8 @@ class WOPEN_OS_Presale_Admin {
             <h2><?php _e('How to Use', 'wopen-os-presale'); ?></h2>
             <p><?php _e('Add the presale form to any page or post using this shortcode:', 'wopen-os-presale'); ?></p>
             <code>[wopen_os_presale]</code>
+            <p><?php _e('Or visit the automatically created page:', 'wopen-os-presale'); ?></p>
+            <a href="<?php echo esc_url(home_url('/wopen-os-presale/')); ?>" class="button button-primary" target="_blank"><?php _e('View Presale Page', 'wopen-os-presale'); ?></a>
         </div>
         <?php
     }
@@ -223,7 +313,7 @@ class WOPEN_OS_Presale_Admin {
     /**
      * Display orders page
      */
-    public function display_orders_page() {
+    public function display_orders() {
         // Check user capabilities
         if (!current_user_can('manage_options')) {
             return;
